@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- © 2022 Chase Curtis. All rights reserved. -->
+    <meta charset="UTF-8">
+    <meta name="description" content="Prototype Vancomycin Dosing Calculator">
+    <meta name="author" content="Chase Curtis">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/stylesheet.css?v=0.0.1">
+    <!-- <link href="./img/logo.png" rel="icon" type="image/x-icon"> -->
+    <title>Vancomycin Dosing Calculator</title>
+</head>
+<body>
+    <h1>~~ UNTESTED | USE AT YOUR OWN RISK ~~</h1>
+    <main class="wrapper">
+        <div class="demographicInfo">
+            <h4>Demographic information</h4>
+            <form id="demographicInforForm" autocomplete="off">
+                <h5>Patient's Info</h5>
+                <input type="radio" id="patient_gender_male" name="gender" value="Male" oninput="run()">
+                <label for="patient_gender_male">Male</label>
+                <input type="radio" id="patient_gender_female" name="gender" value="Female" checked oninput="run()">
+                <label for="patient_gender_female">Female</label><br>
+
+                <!-- TODO Remove values from patient fields -->
+                <label for="patient_age">Age =</label>
+                <input type="number" id="patient_age" name="patient_age" placeholder="20" min="0" max="150" step="1" oninput="run()"><span> years</span><br>
+
+                <label for="patient_height">Height =</label>
+                <input  type="number" id="patient_height" name="patient_height"placeholder="170" min="0" max="220" oninput="run()"><span> cm</span><br>
+
+                <label for="patient_weight">Weight =</label>
+                <input type="number" id="patient_weight" name="patient_weight" placeholder="70.00" min="1" max="1000" oninput="run()"><span> kg</span><br>
+
+                <label for="patient_scr">SCr =</label>
+                <input type="number" id="patient_scr" name="patient_scr" placeholder="1.00" min="0.01" max="20.00" step="0.01" oninput="run()"><span> mg/dL</span><br>
+            </form><br>
+
+            <div id="patient_Ideal_body_weight">Ideal body weight = <span id="patient_Ideal_body_weight_value">N/A</span><span> kg</span></div>
+            <div id="patient_adjusted_body_weight">Adjusted body weight = <span id="patient_adjusted_body_weight_value">N/A</span><span> kg</span></div>
+            <div id="patient_percent_obese_weight">Percent obese = <span id="patient_percent_obese_weight_value">N/A</span><span> %</span></div>
+            <div id="patient_bmi">BMI = <span id="patient_bmi_value">N/A</span><span> kg/m<sup>2</sup></span></div><br>
+
+            <div id="patient_estimated_crcl_using_actual_weight">Estimated CrCl using actual weight =
+                <span id="patient_estimated_crcl_using_actual_weight_value">N/A</span>
+                <span> ml/min </span><button type="button" onclick="run('actual')">Use Value</button></div>
+
+            <div id="patient_estimated_crcl_using_adjusted_weight">Estimated CrCl using adjusted weight =
+                <span id="patient_estimated_crcl_using_adjusted_weight_value">N/A</span>
+                <span> ml/min </span><button type="button" onclick="run('adjusted')">Use Value</button></div>
+
+            <div id="patient_estimated_crcl_using_ideal_weight">Estimated CrCl using ideal weight =
+                <span id="patient_estimated_crcl_using_ideal_weight_value">N/A</span>
+                <span> ml/min </span><button type="button" onclick="run('ideal')">Use Value</button></div>
+
+            <div id="patient_estimated_crcl_using_no_weight">Estimated CrCl with no weight =
+                <span id="patient_estimated_crcl_using_no_weight_value">N/A</span>
+                <span> ml/min </span><button type="button" onclick="run('no')">Use Value</button></div>
+        </div>
+
+        <div class="vancomycinDosingCalculator">
+            <h4>AUC:MIC Vancomycin Dosing Calculator</h4>
+            <form id="form" autocomplete="off">
+                <!-- TODO Remove values from patient fields -->
+                <label for="estimated_crcl">Patients estimated Creatinine Clearance:</label>
+                <input type="number" id="estimated_crcl" name="estimated_crcl" placeholder="1.00" min="0.01" max="2000.00" step="0.01" oninput="run()"><span> ml/min</span><br>
+            </form><br>
+
+            <h5>Patient kinetic data based on population estimates</h5>
+            <div id="patient_ke">Ke = <span id="patient_ke_value">N/A</span><span> hr<sup>-1</sup></span></div>
+            <div id="patient_t_half">T<sub>1/2</sub> = <span id="patient_t_half_value">N/A</span><span> hours</span></div>
+            <div id="patient_vd">Vd = <span id="patient_vd_value">N/A</span><span> liters</span></div>
+            <div id="patient_cl_vanc">Cl<sub>vanc</sub> = <span id="patient_cl_vanc_value">N/A</span><span> L/hr</span></div><br>
+
+            <h5>Total Daily Dose Estimates</h5>
+            <div id="patient_AUC_24_400">AUC<sub>24</sub> - 400 = <span id="patient_AUC_24_400_value">N/A</span>
+                <span> mg, rounded </span><span id="patient_AUC_24_400_value_rounded">N/A</span><span> mg </span></div>
+
+            <div id="patient_AUC_24_500">AUC<sub>24</sub> - 500 = <span id="patient_AUC_24_500_value">N/A</span>
+                <span> mg, rounded </span><span id="patient_AUC_24_500_value_rounded">N/A</span><span> mg </span></div>
+
+            <div id="patient_AUC_24_600">AUC<sub>24</sub> - 600 = <span id="patient_AUC_24_600_value">N/A</span>
+                <span> mg, rounded </span><span id="patient_AUC_24_600_value_rounded">N/A</span><span> mg </span></div>
+
+                <p>Rounded dose are to the nearest 250 mg dose</p>
+
+            <form id="form" autocomplete="off">
+                <!-- TODO Remove values from patient fields -->
+                <label for="desiredVancDose">Desired dose of Vanc:</label>
+                <input type="number" id="desiredVancDose" name="desiredVancDose" placeholder="1.00" min="0.01" max="2000.00" step="0.01" oninput="run()"><span> mg</span><br>
+                <label for="desiredVancDoseingFrequency">Dosing Frequency:</label>
+                <input type="number" id="desiredVancDoseingFrequency" name="desiredVancDoseingFrequency" placeholder="1.00" min="0.01" max="50.00" step="0.01" oninput="run()"><span> hours</span><br>
+            </form><br>
+
+            <div id="estimated_peak">Estimated Peak =  <span id="estimated_peak_value">N/A</span><span> mcg/ml, assuming standard infusion of 1 g/hr</span></div>
+            <div id="estimated_trough">Estimated Trough =  <span id="estimated_trough_value">N/A</span><span> mcg/ml, estimated trough should be 8-15 mcg/ml</span></div>
+            <div id="estimated_AUC_24">Estimated AUC<sub>24</sub> =  <span id="estimated_AUC_24_value">N/A</span><span> mcg*hr/ml</span></div><br>
+            <div id="doubleCheck_AUC_24">Double Check AUC<sub>24</sub> =  <span id="doubleCheck_AUC_24_value">N/A</span><span> mcg*hr/ml</span></div>
+
+        </div>
+    </main>
+
+    <script src="./js/include.js?v=0.1"></script>
+</body>
+<footer>
+    <small>&copy; 2022 Chase Curtis. All rights reserved.</small>
+</footer>
+</html>

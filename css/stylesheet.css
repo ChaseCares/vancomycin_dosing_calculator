@@ -1,0 +1,58 @@
+/* © 2022 Chase Curtis. All rights reserved. */
+
+body {
+    background-color: #444;
+    margin: 0;
+}
+h1 {
+    color: #000;
+    text-align : center;
+    background-color: #b30000;
+}
+
+h5 {
+    padding: 0;
+    margin: 0;
+}
+form{
+    border: 2px solid #000;
+}
+input[type=number] {
+    -moz-appearance: textfield;
+    width: 50px;
+}
+
+footer {
+    color: #000;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 10px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.wrapper {
+        width: 95%;
+        margin: 0 auto;
+}
+.demographicInfo, .vancomycinDosingCalculator {
+    border: 1px solid white;
+    float: left;
+    min-height: 400px;
+    width: 48%;
+    color: #000;
+    padding: 10px;
+}
+.demographicInfo {
+    background-color: #f2760a80;
+    text-align: center;
+}
+.vancomycinDosingCalculator {
+    background-color: #7357ff88;
+    text-align: center;
+}
