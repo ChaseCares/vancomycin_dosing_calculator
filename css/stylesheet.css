@@ -45,8 +45,9 @@ input::-webkit-inner-spin-button {
     float: left;
     min-height: 400px;
     width: 48%;
-    color: #000;
+    color: #fff;
     padding: 10px;
+    text-shadow: 1px 1px 1px #000;
 }
 .demographicInfo {
     background-color: #f2760a80;
@@ -55,4 +56,10 @@ input::-webkit-inner-spin-button {
 .vancomycinDosingCalculator {
     background-color: #7357ff88;
     text-align: center;
+}
+
+@media (max-width: 1160px) {
+    .demographicInfo, .vancomycinDosingCalculator {
+        width: 96%;
+    }
 }
